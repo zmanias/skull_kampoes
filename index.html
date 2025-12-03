@@ -65,5 +65,125 @@
     navLinks.classList.toggle('active');
   });
 </script>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span>🤖 Malaka AI Assistant</span>
+    </div>
+    <span class="chat-close" onclick="toggleChat()">✖</span>
+  </div>
+  
+  <div class="chat-body" id="chatBody">
+    <div class="message ai">Halo! Saya asisten AI Malaka Muda. Ada yang bisa saya bantu terkait program atau seminar kami?</div>
+  </div>
+  
+  <div class="typing" id="typingIndicator">Sedang mengetik...</div>
+
+  <div class="chat-footer">
+    <input type="text" id="chatInput" class="chat-input" placeholder="Tulis pertanyaan..." onkeypress="handleEnter(event)">
+    <button class="chat-send" id="sendBtn" onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<div class="fab-container" id="fabContainer">
+  <div class="fab-main" onclick="toggleFab()">
+    <span id="fabIcon">+</span>
+  </div>
+  
+  <div class="fab-sub" data-tooltip="Tanya AI" onclick="toggleChat()">
+    <span>🤖</span>
+  </div>
+  
+  <div class="fab-sub" data-tooltip="WhatsApp Admin" onclick="window.open('https://wa.me/6285881735230', '_blank')">
+    <span>📱</span>
+  </div>
+</div>
+
+<script>
+  // === FAB CONTROLLER ===
+  function toggleFab() {
+    const container = document.getElementById('fabContainer');
+    const icon = document.getElementById('fabIcon');
+    
+    container.classList.toggle('open');
+    const isActive = container.classList.contains('open');
+    
+    // Ganti ikon + jadi x
+    if (isActive) {
+      document.querySelector('.fab-main').classList.add('active');
+    } else {
+      document.querySelector('.fab-main').classList.remove('active');
+    }
+  }
+
+  // === CHAT WINDOW CONTROLLER ===
+  function toggleChat() {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.classList.toggle('show');
+    
+    // Tutup menu FAB jika chat dibuka agar bersih
+    document.getElementById('fabContainer').classList.remove('open');
+    document.querySelector('.fab-main').classList.remove('active');
+  }
+
+  function handleEnter(e) {
+    if (e.key === 'Enter') sendMessage();
+  }
+
+  // === AI API INTEGRATION ===
+  async function sendMessage() {
+    const inputField = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatBody = document.getElementById('chatBody');
+    const typing = document.getElementById('typingIndicator');
+    
+    const text = inputField.value.trim();
+    if (!text) return;
+
+    // 1. Tampilkan Pesan User
+    appendMessage(text, 'user');
+    inputField.value = '';
+    
+    // 2. Set Loading State
+    sendBtn.disabled = true;
+    typing.style.display = 'block';
+    chatBody.scrollTop = chatBody.scrollHeight; // Auto scroll ke bawah
+
+    try {
+      // 3. Panggil API Fandirr
+      const response = await fetch(`https://api.fandirr.my.id/ai/gpt?prompt=${encodeURIComponent(text)}&model=gpt-3.5-turbo`);
+      const data = await response.json();
+
+      // 4. Proses Respon
+      typing.style.display = 'none';
+      sendBtn.disabled = false;
+
+      if (data.status === 'success' && data.result && data.result.reply) {
+        appendMessage(data.result.reply, 'ai');
+      } else {
+        appendMessage("Maaf, saya sedang gangguan. Coba lagi nanti ya.", 'ai');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      typing.style.display = 'none';
+      sendBtn.disabled = false;
+      appendMessage("Koneksi gagal. Periksa internet Anda.", 'ai');
+    }
+  }
+
+  function appendMessage(text, sender) {
+    const chatBody = document.getElementById('chatBody');
+    const div = document.createElement('div');
+    div.classList.add('message', sender);
+    
+    // Konversi baris baru (\n) menjadi <br> agar rapi
+    div.innerHTML = text.replace(/\n/g, '<br>');
+    
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+</script>
+
 </body>
 </html>

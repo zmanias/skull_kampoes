@@ -381,3 +381,249 @@ footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
         margin-top: 20px;
     }
 }
+
+/* =========================================
+   FLOATING ACTION BUTTON (FAB) & CHAT AI
+   ========================================= */
+
+/* Container FAB di pojok kanan bawah */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Tombol Utama (Main FAB) */
+.fab-main {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ff3c3c, #b30000);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(255, 60, 60, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.fab-main:hover {
+    transform: scale(1.1);
+}
+
+.fab-main.active {
+    transform: rotate(45deg); /* Efek putar saat diklik */
+    background: #333;
+}
+
+/* Sub Tombol (Chat AI) */
+.fab-sub {
+    width: 50px;
+    height: 50px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ff3c3c;
+    font-size: 22px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px) scale(0);
+    transition: all 0.3s ease;
+    pointer-events: none; /* Tidak bisa diklik kalau sembunyi */
+    border: 1px solid #ff3c3c;
+    position: relative;
+}
+
+/* Tooltip untuk Sub FAB */
+.fab-sub::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 60px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.fab-sub:hover::after {
+    opacity: 1;
+}
+
+/* Tampilkan Sub FAB saat Main FAB aktif */
+.fab-container.open .fab-sub {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* ============================
+   TAMPILAN JENDELA CHAT AI
+   ============================ */
+.chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    height: 500px;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px); /* Efek kaca */
+    border: 1px solid #ff3c3c;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    /* Animasi Masuk */
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chat-window.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+}
+
+/* Header Chat */
+.chat-header {
+    background: linear-gradient(90deg, #ff3c3c, #b30000);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.chat-close {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+.chat-close:hover { transform: scale(1.2); }
+
+/* Body Chat (Tempat Pesan) */
+.chat-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ff3c3c #111;
+}
+
+/* Gaya Pesan */
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease;
+}
+
+.message.ai {
+    background: #333;
+    color: #eee;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+    border: 1px solid #444;
+}
+
+.message.user {
+    background: #ff3c3c;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 2px 5px rgba(255, 60, 60, 0.3);
+}
+
+/* Footer Chat (Input) */
+.chat-footer {
+    padding: 10px;
+    background: #111;
+    border-top: 1px solid #333;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input {
+    flex: 1;
+    background: #222;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    outline: none;
+}
+.chat-input:focus { border-color: #ff3c3c; }
+
+.chat-send {
+    background: #ff3c3c;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+.chat-send:hover { background: #ff5555; transform: scale(1.1); }
+.chat-send:disabled { background: #555; cursor: not-allowed; }
+
+/* Typing Indicator */
+.typing {
+    font-style: italic;
+    font-size: 12px;
+    color: #888;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    display: none;
+}
+
+/* Responsive Mobile */
+@media (max-width: 480px) {
+    .chat-window {
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 80vh; /* Full screen agak bawah */
+        border-radius: 20px 20px 0 0;
+    }
+    .fab-container {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
