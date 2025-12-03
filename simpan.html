@@ -1,0 +1,14 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $nama = $_POST["nama"];
+  $email = $_POST["email"];
+  $hp = $_POST["hp"];
+  $instansi = $_POST["instansi"];
+
+  $data = "Nama: $nama | Email: $email | HP: $hp | Instansi: $instansi\n";
+
+  file_put_contents("pendaftaran.txt", $data, FILE_APPEND);
+  echo "<h2>Terima kasih, $nama! Pendaftaran berhasil.</h2>";
+  echo "<a href='register.html'>Kembali ke Form</a>";
+}
+?>

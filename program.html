@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Malaka Muda</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+    <header>
+      <div class="navbar">
+        <div class="logo">
+          <a href="index.html"><img src="img/logo.png" alt="Logo Malaka Muda"></a>
+        </div>
+        
+        <div class="menu-toggle" id="menu-toggle">
+          &#9776; </div>
+    
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="about.html">Tentang</a></li>
+          <li><a href="program.html">Program</a></li>
+          <li><a href="galeri.html">Galeri</a></li>
+          <li><a href="register.html">Daftar Seminar</a></li>
+        </ul>
+      </div>
+    </header>
+    
+
+  <!-- Section Program -->
+  <main class="content">
+    <h1>Program Terbaru</h1>
+
+    <!-- Item 1 -->
+    <div class="program-item">
+      <img src="img/unj.jpg" alt="Talkshow Malaka Muda UNJ">
+      <div class="program-info">
+        <h2><a href="https://fis.unj.ac.id/pendidikansejarah/?p=1948" target="_blank">Talkshow Relevansi Semangat Tan Malaka dalam Era Digital</a></h2>
+        <p class="meta">FIS UNJ – 2025</p>
+        <p>
+          Kegiatan talkshow yang diinisiasi oleh komunitas Malaka Muda Indonesia bersama mahasiswa FIS UNJ membahas pemikiran Tan Malaka dan relevansinya dalam era digital.
+        </p>
+        <a href="https://fis.unj.ac.id/pendidikansejarah/?p=1948" class="read-btn" target="_blank">Selengkapnya</a>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="program-item reverse">
+      <img src="img/mediasuaramabes.jpg" alt="Talkshow Malaka Muda Balai Yos Sudarso">
+      <div class="program-info">
+        <h2><a href="https://www.mediasuaramabes.com/talkshow-relevansi-semangat-tan-malaka-dalam-era-digital-balai-yos-sudarso-jakarta-utara/" target="_blank">Talkshow: Semangat Tan Malaka di Balai Yos Sudarso Jakarta Utara</a></h2>
+        <p class="meta">Media Suara Mabes – 2025</p>
+        <p>
+          Malaka Muda Indonesia menyelenggarakan talkshow di Balai Yos Sudarso yang membangkitkan semangat berpikir kritis dan progresif generasi muda melalui warisan pemikiran Tan Malaka.
+        </p>
+        <a href="https://www.mediasuaramabes.com/talkshow-relevansi-semangat-tan-malaka-dalam-era-digital-balai-yos-sudarso-jakarta-utara/" class="read-btn" target="_blank">Selengkapnya</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Malaka Muda Indonesia. All Rights Reserved.</p>
+  </footer>
+
+</body>
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+</script>
+</body>
+</html>
