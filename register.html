@@ -33,30 +33,31 @@
 
   <main class="container-register">
     <div class="form-wrapper">
-      <h2>Form Pendaftaran Seminar Malaka Muda</h2>
+      <h2>Form Pendaftaran via WhatsApp</h2>
+      <p style="text-align: center; margin-bottom: 20px; color: #ccc; font-size: 0.9rem;">
+        Isi data diri Anda di bawah ini, lalu klik tombol Daftar untuk terhubung otomatis ke WhatsApp Admin.
+      </p>
       
-      <form action="simpan.php" method="POST">
+      <form id="waForm" onsubmit="kirimKeWhatsApp(event)">
+        
         <div class="input-group">
           <label for="nama">Nama Lengkap:</label>
-          <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
+          <input type="text" id="nama" placeholder="Masukkan nama Anda" required>
         </div>
 
         <div class="input-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" placeholder="Masukkan email aktif" required>
+          <label for="prodi">Program Studi (Prodi):</label>
+          <input type="text" id="prodi" placeholder="Contoh: Ilmu Sejarah" required>
         </div>
 
         <div class="input-group">
-          <label for="hp">No. HP:</label>
-          <input type="tel" id="hp" name="hp" placeholder="08xxxxxxxxxx" required>
+          <label for="kampus">Asal Kampus / Instansi:</label>
+          <input type="text" id="kampus" placeholder="Contoh: Universitas Negeri Jakarta" required>
         </div>
 
-        <div class="input-group">
-          <label for="instansi">Instansi / Asal Komunitas:</label>
-          <input type="text" id="instansi" name="instansi" placeholder="Contoh: Mahasiswa / Komunitas Literasi / Umum" required>
-        </div>
-
-        <button type="submit" class="submit-btn">Daftar Sekarang</button>
+        <button type="submit" class="submit-btn">
+          <span style="margin-right: 5px;">📱</span> Daftar Sekarang via WA
+        </button>
       </form>
     </div>
   </main>
@@ -66,12 +67,38 @@
   </footer>
 
   <script>
+    // 1. Script Toggle Menu Navbar (Agar tetap jalan di HP)
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
+    // 2. Script Kirim ke WhatsApp
+    function kirimKeWhatsApp(event) {
+      event.preventDefault(); // Mencegah reload halaman
+
+      // Ambil nilai dari formulir
+      const nama = document.getElementById('nama').value;
+      const prodi = document.getElementById('prodi').value;
+      const kampus = document.getElementById('kampus').value;
+
+      // Nomor Admin (Format 628...)
+      const nomorAdmin = "6285881735230"; 
+
+      // Format Pesan sesuai request
+      // %0A adalah kode untuk baris baru (Enter) di URL
+      const pesan = `assalamualaikum ka selamat pagi/siang/sore, nama saya ${nama}, dari prodi ${prodi}, asal kampus ${kampus}. Saya mau daftar seminar Malaka muda, apakah masih bisa? Langkah selanjutnya bagaimana mohon bimbingannya terima kasihl🙏😉`;
+
+      // Buat link WhatsApp
+      const linkWA = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`;
+
+      // Buka WhatsApp di tab baru
+      window.open(linkWA, '_blank');
+    }
   </script>
 
 </body>
