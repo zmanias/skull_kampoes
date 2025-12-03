@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri - Malaka Muda</title>
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img src="img/logo.png" alt="Logo Malaka Muda">
+        </a>
+      </div>
+      
+      <div class="menu-toggle" id="menu-toggle">
+        <span>&#9776;</span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="about.html">Tentang</a></li>
+        <li><a href="program.html">Program</a></li>
+        <li><a href="galeri.html" class="active">Galeri</a></li> <li><a href="register.html" class="active-btn">Gabung Sekarang</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="content">
+    <h1 class="galeri-header">GALERI KEGIATAN</h1>
+
+    <div class="filter-buttons">
+      <button class="active" onclick="filterSelection('all')">Semua</button>
+      <button onclick="filterSelection('kegiatan')">Kegiatan</button>
+      <button onclick="filterSelection('diskusimpr')">Diskusi Deradikalisasi MPR RI</button>
+      <button onclick="filterSelection('audiensilp3i')">Audiensi Politeknik LP3I</button>
+      <button onclick="filterSelection('talkshow')">Talkshow Tan Malaka</button>
+      <button onclick="filterSelection('workshop')">Workshop</button>
+    </div>
+
+    <div class="galeri-container">
+      <div class="galeri-item diskusimpr"><img src="img/mpr1.jpg" alt="Kegiatan MPR 1"></div>
+      <div class="galeri-item diskusimpr"><img src="img/mpr2.jpg" alt="Kegiatan MPR 2"></div>
+      <div class="galeri-item diskusimpr"><img src="img/mpr3.jpg" alt="Kegiatan MPR 3"></div>
+      
+      <div class="galeri-item audiensilp3i"><img src="img/audiensi1.jpg" alt="Audiensi 1"></div>
+      <div class="galeri-item audiensilp3i"><img src="img/audiensi3.jpg" alt="Audiensi 2"></div>
+      <div class="galeri-item audiensilp3i"><img src="img/audiensi4.jpg" alt="Audiensi 3"></div>
+      <div class="galeri-item audiensilp3i"><img src="img/audiensi5.jpg" alt="Audiensi 4"></div>
+      
+      <div class="galeri-item workshop"><img src="img/workshop1.jpg" alt="Workshop 1"></div>
+      <div class="galeri-item workshop"><img src="img/workshop2.jpg" alt="Workshop 2"></div>
+      <div class="galeri-item workshop"><img src="img/workshop3.jpg" alt="Workshop 3"></div>
+      <div class="galeri-item workshop"><img src="img/workshop4.jpg" alt="Workshop 4"></div>
+      
+      <div class="galeri-item talkshow"><img src="img/talkshow1.jpg" alt="Talkshow 1"></div>
+      <div class="galeri-item talkshow"><img src="img/talkshow2.jpg" alt="Talkshow 2"></div>
+      <div class="galeri-item talkshow"><img src="img/talkshow3.jpg" alt="Talkshow 3"></div>
+      <div class="galeri-item talkshow"><img src="img/talkshow4.jpg" alt="Talkshow 4"></div>
+      <div class="galeri-item talkshow"><img src="img/talkshow5.jpg" alt="Talkshow 5"></div>
+      <div class="galeri-item talkshow"><img src="img/talkshow6.jpg" alt="Talkshow 6"></div>
+      <div class="galeri-item talkshow"><img src="img/talkshow7.jpg" alt="Talkshow 7"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Malaka Muda Indonesia. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // 1. SCRIPT UNTUK NAVBAR HAMBURGER (WAJIB ADA)
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // 2. SCRIPT UNTUK FILTER GALERI
+    filterSelection("all");
+    
+    function filterSelection(c) {
+      let x, i;
+      x = document.getElementsByClassName("galeri-item");
+      if (c == "all") c = "";
+      
+      for (i = 0; i < x.length; i++) {
+        w3RemoveClass(x[i], "show");
+        if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+      }
+      
+      // Highlight tombol aktif
+      const btnContainer = document.querySelector(".filter-buttons");
+      const btns = btnContainer.getElementsByTagName("button");
+      for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function(){
+          let current = document.getElementsByClassName("active");
+          if (current.length > 0) { 
+            current[0].className = current[0].className.replace(" active", "");
+          }
+          this.className += " active";
+        });
+      }
+    }
+
+    // Fungsi Pembantu Tambah Class
+    function w3AddClass(element, name) {
+      let i, arr1, arr2;
+      arr1 = element.className.split(" ");
+      arr2 = name.split(" ");
+      for (i = 0; i < arr2.length; i++) {
+        if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+      }
+    }
+
+    // Fungsi Pembantu Hapus Class
+    function w3RemoveClass(element, name) {
+      let i, arr1, arr2;
+      arr1 = element.className.split(" ");
+      arr2 = name.split(" ");
+      for (i = 0; i < arr2.length; i++) {
+        while (arr1.indexOf(arr2[i]) > -1) {
+          arr1.splice(arr1.indexOf(arr2[i]), 1);     
+        }
+      }
+      element.className = arr1.join(" ");
+    }
+  </script>
+  
+  <style>
+    .galeri-item { display: none; /* Sembunyikan semua di awal */ }
+    .show { display: block; /* Tampilkan yang dipilih */ animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+
+</body>
+</html>
